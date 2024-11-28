@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "appium": "^2.12.1",
+    "webdriverio": "^9.4.0"
+  }
+}
