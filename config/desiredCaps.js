@@ -53,7 +53,7 @@ async function main() {
 
     //button Login Vercel [745,2134][832,2221]
     const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
-    await loginVercelButton.waitForExist({ timeout: 10000 });
+    await loginVercelButton.waitForExist({ timeout: 15000 });
     await loginVercelButton.click();
 
     //button disable [259,1764][952,1861]
@@ -62,8 +62,9 @@ async function main() {
     await disableButton.click();
     await driver.pause(2000)
 
-    const investButton = await driver.$('//*[@bounds="[42,1711][1042,1843]"]');
-    await investButton.waitForExist({ timeout: 10000 });
+    // const investButton = await driver.$('//*[@bounds="[42,1598][1042,1730]"]');
+    const investButton = await driver.$('//android.widget.TextView[@text="Invest To Maximize Your Earnings"]');
+    await investButton.waitForExist({ timeout: 15000 });
     await investButton.click();
 
 
@@ -120,19 +121,44 @@ async function main() {
 
     await performTapAction(400, 50, 'finger2');
 
-    await driver.pause(25000)
-
-    const customBounds = [42, 2107, 1042, 2215];
-    await performTapAction(400, 50, 'finger3', customBounds);
-    await driver.pause(5000);
+    await driver.pause(15000)
 
 
+    // Confirm Transaction
+    await driver.action('pointer')
+        .move({ duration: 0, x: 142, y: 2146 })
+        .down({ button: 0 })
+        .move({ duration: 1000, x: 985, y: 2149 })
+        .up({ button: 0 })
+        .perform();
+
+    await driver.pause(3000)
+
+    for (let i = 0; i < 4; i++) {
+        await driver.action('pointer')
+            .move({ duration: 0, x: 534, y: 2168 })
+            .down({ button: 0 })
+            .pause(50)
+            .up({ button: 0 })
+            .perform();
+    }
+    await driver.pause(15000)
 
 
+    await driver.action('pointer')
+        .move({ duration: 0, x: 820, y: 1161 })
+        .down({ button: 0 })
+        .pause(50)
+        .up({ button: 0 })
+        .perform();
+
+
+    await driver.pause(6000)
+
+    
     const activityPage = await driver.$('//android.view.View[@content-desc="Activity"]')
     await activityPage.waitForExist({ timeout: 10000 });
     await activityPage.click();
-
 
 }
 
