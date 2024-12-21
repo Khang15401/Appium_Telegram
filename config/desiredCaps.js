@@ -1,8 +1,14 @@
 const { remote } = require("webdriverio");
+const { Eyes, Target } = require("@applitools/eyes-webdriverio");
+const dotenv = require("dotenv");
+dotenv.config();
 
 let driver;
+let eyes;
 
 async function main() {
+    eyes = new Eyes();
+
     driver = await remote({
         logLevel: "debug",
         hostname: "127.0.0.1",
@@ -22,6 +28,10 @@ async function main() {
         }
 
     });
+
+    eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
+
+    await eyes.open(driver, "Telegram", "Check Home Page");
 
     await driver.startActivity(
         "org.telegram.messenger.web",
@@ -51,22 +61,25 @@ async function main() {
 
     await driver.pause(12000)
 
+    
     //button Login Vercel [745,2134][832,2221]
     const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
     await loginVercelButton.waitForExist({ timeout: 15000 });
     await loginVercelButton.click();
-
+    
     //button disable [259,1764][952,1861]
     const disableButton = await driver.$('//*[@bounds="[259,1764][952,1861]"]');
     await disableButton.waitForExist({ timeout: 10000 });
     await disableButton.click();
     await driver.pause(2000)
-
+    await eyes.check(Target.window().fully());
+    
     // const investButton = await driver.$('//*[@bounds="[42,1598][1042,1730]"]');
     const investButton = await driver.$('//android.widget.TextView[@text="Invest To Maximize Your Earnings"]');
     await investButton.waitForExist({ timeout: 15000 });
     await investButton.click();
-
+    
+    await eyes.close();
 
     await driver.pause(5000)
 
@@ -155,7 +168,7 @@ async function main() {
 
     await driver.pause(6000)
 
-    
+
     const activityPage = await driver.$('//android.view.View[@content-desc="Activity"]')
     await activityPage.waitForExist({ timeout: 10000 });
     await activityPage.click();
