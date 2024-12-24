@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 let driver;
-let eyes;
+// let eyes;
 
 async function main() {
-    eyes = new Eyes();
+    // eyes = new Eyes();
 
     driver = await remote({
         logLevel: "debug",
@@ -29,57 +29,75 @@ async function main() {
 
     });
 
-    eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
+    // eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
 
-    await eyes.open(driver, "Telegram", "Check Home Page");
+    // await eyes.open(driver, "Telegram", "Check Home Page");
 
-    await driver.startActivity(
-        "org.telegram.messenger.web",
-        "org.telegram.messenger.DefaultIcon"
-
-    );
-
-
-    const isTelegramOpened = await driver.isAppInstalled("org.telegram.messenger.web");
-    console.log("Telegram app installed: ", isTelegramOpened);
-    await driver.pause(4000)
-
-    const searchButton = await driver.$('~Search');
-    await searchButton.click();
-
-    const searchInput = await driver.$('//android.widget.EditText[@text="Search"]');
-    await searchInput.waitForExist({ timeout: 5000 });
-    await searchInput.setValue("tbk_stg_bot");
-
-    const botElement = await driver.$('//android.view.ViewGroup[@text="tbk_stg_bot, bot"]');
-    await botElement.waitForExist({ timeout: 5000 });
-    await botElement.click();
-
-    const moreOptionsButton = await driver.$('//android.view.View[@content-desc="Bot menu"]');
-    await moreOptionsButton.waitForExist({ timeout: 5000 });
-    await moreOptionsButton.click();
-
-    await driver.pause(12000)
-
-    
-    //button Login Vercel [745,2134][832,2221]
-    const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
-    await loginVercelButton.waitForExist({ timeout: 15000 });
-    await loginVercelButton.click();
-    
-    //button disable [259,1764][952,1861]
-    const disableButton = await driver.$('//*[@bounds="[259,1764][952,1861]"]');
-    await disableButton.waitForExist({ timeout: 10000 });
-    await disableButton.click();
-    await driver.pause(2000)
-    await eyes.check(Target.window().fully());
+    const currentActivity = await driver.getCurrentActivity();
+    if (currentActivity !== "org.telegram.messenger.DefaultIcon") {
+        await driver.startActivity(
+            "org.telegram.messenger.web",
+            "org.telegram.messenger.DefaultIcon"
+        );
+        
+        
+        const isTelegramOpened = await driver.isAppInstalled("org.telegram.messenger.web");
+        console.log("Telegram app installed: ", isTelegramOpened);
+        await driver.pause(4000)
+        
+        const searchButton = await driver.$('~Search');
+        await searchButton.click();
+        
+        const searchInput = await driver.$('//android.widget.EditText[@text="Search"]');
+        await searchInput.waitForExist({ timeout: 5000 });
+        await searchInput.setValue("tbk_stg_bot");
+        
+        const botElement = await driver.$('//android.view.ViewGroup[@text="tbk_stg_bot, bot"]');
+        await botElement.waitForExist({ timeout: 5000 });
+        await botElement.click();
+        
+        const moreOptionsButton = await driver.$('//android.view.View[@content-desc="Bot menu"]');
+        await moreOptionsButton.waitForExist({ timeout: 5000 });
+        await moreOptionsButton.click();
+        
+        await driver.pause(12000)
+        
+        
+        //button Login Vercel [745,2134][832,2221]
+        const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
+        await loginVercelButton.waitForExist({ timeout: 25000 });
+        await loginVercelButton.click();
+        
+        //button disable [259,1764][952,1861]
+        const disableButton = await driver.$('//*[@bounds="[259,1764][952,1861]"]');
+        await disableButton.waitForExist({ timeout: 10000 });
+        await disableButton.click();
+        await driver.pause(2000)
+    }
+    // await eyes.check(Target.window().fully());
     
     // const investButton = await driver.$('//*[@bounds="[42,1598][1042,1730]"]');
-    const investButton = await driver.$('//android.widget.TextView[@text="Invest To Maximize Your Earnings"]');
+    // const investButton = await driver.$('//android.widget.TextView[@text="Invest To Maximize Your Earnings"]');
+    // await investButton.waitForExist({ timeout: 15000 });
+    // await investButton.click();
+    await driver.performActions([{
+        type: 'pointer',
+        id: 'finger1',
+        parameters: { pointerType: 'touch' },   
+        actions: [
+            { type: 'pointerMove', duration: 0, x: 500, y: 1800 },
+            { type: 'pointerDown' },
+            { type: 'pointerMove', duration: 1000, x: 500, y: 600 },
+            { type: 'pointerUp' }
+        ]
+    }]);
+    await driver.pause(2000);
+
+    const investButton = await driver.$('//android.view.View[@bounds="[42,1843][1042,1974]"]');
     await investButton.waitForExist({ timeout: 15000 });
     await investButton.click();
     
-    await eyes.close();
+    // await eyes.close();
 
     await driver.pause(5000)
 
@@ -138,24 +156,24 @@ async function main() {
 
 
     // Confirm Transaction
-    await driver.action('pointer')
-        .move({ duration: 0, x: 142, y: 2146 })
-        .down({ button: 0 })
-        .move({ duration: 1000, x: 985, y: 2149 })
-        .up({ button: 0 })
-        .perform();
+    // await driver.action('pointer')
+    //     .move({ duration: 0, x: 142, y: 2146 })
+    //     .down({ button: 0 })
+    //     .move({ duration: 1000, x: 985, y: 2149 })
+    //     .up({ button: 0 })
+    //     .perform();
 
-    await driver.pause(3000)
+    // await driver.pause(3000)
 
-    for (let i = 0; i < 4; i++) {
-        await driver.action('pointer')
-            .move({ duration: 0, x: 534, y: 2168 })
-            .down({ button: 0 })
-            .pause(50)
-            .up({ button: 0 })
-            .perform();
-    }
-    await driver.pause(15000)
+    // for (let i = 0; i < 4; i++) {
+    //     await driver.action('pointer')
+    //         .move({ duration: 0, x: 534, y: 2168 })
+    //         .down({ button: 0 })
+    //         .pause(50)
+    //         .up({ button: 0 })
+    //         .perform();
+    // }
+    // await driver.pause(15000)
 
 
     await driver.action('pointer')
@@ -167,6 +185,20 @@ async function main() {
 
 
     await driver.pause(6000)
+
+
+    await driver.performActions([{
+        type: 'pointer',
+        id: 'finger2',
+        parameters: { pointerType: 'touch' },
+        actions: [
+            { type: 'pointerMove', duration: 0, x: 500, y: 600 },
+            { type: 'pointerDown' },
+            { type: 'pointerMove', duration: 1000, x: 500, y: 1800 },
+            { type: 'pointerUp' }
+        ]
+    }]);
+    await driver.pause(2000);
 
 
     const activityPage = await driver.$('//android.view.View[@content-desc="Activity"]')

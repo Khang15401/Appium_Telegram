@@ -1,6 +1,13 @@
 {
+  "scripts": {
+    "start": "node config/desiredCaps.js"
+  },
   "dependencies": {
     "appium": "^2.12.1",
     "webdriverio": "^9.4.0"
+  },
+  "devDependencies": {
+    "@applitools/eyes-selenium": "^4.79.0",
+    "@applitools/eyes-webdriverio": "^5.55.0"
   }
 }
