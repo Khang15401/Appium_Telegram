@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "start": "node config/desiredCaps.js"
+    "start": "node config/withdrawTest.js"
   },
   "dependencies": {
     "appium": "^2.12.1",
+    "pg": "^8.13.1",
     "webdriverio": "^9.4.0"
   },
   "devDependencies": {
