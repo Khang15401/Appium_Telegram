@@ -5,10 +5,10 @@ dotenv.config();
 const getOtpFromDatabase = require('./getOTPEmail');  // Import directly
 
 let driver;
-// let eyes;
+let eyes;
 
 async function main() {
-    // eyes = new Eyes();
+    eyes = new Eyes();
 
     driver = await remote({
         logLevel: "debug",
@@ -30,9 +30,9 @@ async function main() {
 
     });
 
-    // eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
+    eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
 
-    // await eyes.open(driver, "Telegram", "Check Home Page");
+    await eyes.open(driver, "Telegram", "Check Page Withdraw");
 
     const currentActivity = await driver.getCurrentActivity();
     if (currentActivity !== "org.telegram.messenger.DefaultIcon") {
@@ -75,7 +75,6 @@ async function main() {
         await disableButton.click();
         await driver.pause(2000);
     }
-    // await eyes.check(Target.window().fully());
 
     const assetButton = await driver.$('//android.view.View[@bounds="[42,2118][244,2289]"]')
     await assetButton.waitForExist({ timeout: 5000 });
@@ -146,7 +145,7 @@ async function main() {
     await driver.pause(4000);
 
     await driver.executeScript('mobile: shell', [{
-        command: 'input text "0.12"'
+        command: 'input text "0.05"'
     }]);
 
     await driver.pause(10000);
@@ -209,6 +208,14 @@ async function main() {
                 .pause(50)
                 .up({ button: 0 })
                 .perform();
+            await driver.pause(3000);
+
+            await eyes.check(Target.window().fully());
+
+            await driver.pause(3000);
+
+            await eyes.close();
+
         } else {
             throw new Error('Failed to retrieve OTP');
         }
