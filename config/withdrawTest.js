@@ -63,23 +63,29 @@ async function main() {
 
         await driver.pause(12000);
 
+        await eyes.check(Target.window().fully());
+
+            await driver.pause(3000);
+
+            await eyes.close();
+
 
         //button Login Vercel [745,2134][832,2221]
-        const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
-        await loginVercelButton.waitForExist({ timeout: 25000 });
-        await loginVercelButton.click();
+        // const loginVercelButton = await driver.$('//*[@bounds="[745,2134][832,2221]"]');
+        // await loginVercelButton.waitForExist({ timeout: 25000 });
+        // await loginVercelButton.click();
 
-        //button disable [259,1764][952,1861]
-        const disableButton = await driver.$('//*[@bounds="[259,1764][952,1861]"]');
-        await disableButton.waitForExist({ timeout: 10000 });
-        await disableButton.click();
-        await driver.pause(2000);
+        // //button disable [259,1764][952,1861]
+        // const disableButton = await driver.$('//*[@bounds="[259,1764][952,1861]"]');
+        // await disableButton.waitForExist({ timeout: 10000 });
+        // await disableButton.click();
+        // await driver.pause(2000);
     }
 
-    const assetButton = await driver.$('//android.view.View[@bounds="[42,2118][244,2289]"]')
-    await assetButton.waitForExist({ timeout: 5000 });
-    await assetButton.click();
-    await driver.pause(3000);
+    // const assetButton = await driver.$('//android.view.View[@bounds="[42,2118][244,2289]"]')
+    // await assetButton.waitForExist({ timeout: 5000 });
+    // await assetButton.click();
+    // await driver.pause(3000);
 
     const withdrawnButton = await driver.$('//android.widget.Button[@text="Withdraw" and @bounds="[378,1370][703,1491]"]');
     await withdrawnButton.waitForExist({ timeout: 5000 });
@@ -210,11 +216,11 @@ async function main() {
                 .perform();
             await driver.pause(3000);
 
-            await eyes.check(Target.window().fully());
+            // await eyes.check(Target.window().fully());
 
-            await driver.pause(3000);
+            // await driver.pause(3000);
 
-            await eyes.close();
+            // await eyes.close();
 
         } else {
             throw new Error('Failed to retrieve OTP');
