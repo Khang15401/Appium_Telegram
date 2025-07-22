@@ -1,7 +1,6 @@
+require("dotenv").config();
 const { remote } = require("webdriverio");
 const { Eyes, Target } = require("@applitools/eyes-webdriverio");
-const dotenv = require("dotenv");
-dotenv.config();
 
 let driver;
 let eyes;
@@ -16,10 +15,8 @@ async function main() {
     port: 4723,
     path: "/",
     capabilities: {
-      // Standard W3C capabilities (không cần prefix)
       platformName: "Android",
 
-      // Appium-specific capabilities (cần prefix appium:)
       "appium:deviceName": "emulator-5554",
       "appium:appPackage": "com.android.chrome",
       "appium:appActivity": "com.google.android.apps.chrome.Main",
@@ -34,8 +31,8 @@ async function main() {
 
   await driver.pause(7000);
 
-  //   eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
-  //   await eyes.open(driver, "Ting-Web", "Check Page Transfer");
+  eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
+  await eyes.open(driver, "Ting-Web", "Check Page Transfer");
 
   const currentActivity = await driver.getCurrentActivity();
   if (currentActivity !== "com.google.android.apps.chrome.Main") {
@@ -45,19 +42,21 @@ async function main() {
     );
     console.log("Chrome was not open, started activity.");
     await driver.pause(10000);
-  } else {
-    console.log("Chrome is already open, continuing...");
 
-    //Click session transfer
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 399, y: 590 })
+      .move({ duration: 0, x: 431, y: 573 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
+    console.log("1");
 
     await driver.pause(7000);
+  } else {
+    console.log("Chrome is already open, continuing...");
+
+    //Click session transfer
     //Click input search friend
     // await driver
     //   .action("pointer")
@@ -75,8 +74,29 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
+    console.log("2");
 
     await driver.pause(6000);
+
+    //Select token transfer
+    await driver
+      .action("pointer")
+      .move({ duration: 0, x: 945, y: 615 })
+      .down({ button: 0 })
+      .pause(50)
+      .up({ button: 0 })
+      .perform();
+    await driver.pause(2000);
+
+    //Click token USDT
+    await driver
+      .action("pointer")
+      .move({ duration: 0, x: 472, y: 1784 })
+      .down({ button: 0 })
+      .pause(50)
+      .up({ button: 0 })
+      .perform();
+    await driver.pause(2000);
 
     await driver.executeScript("mobile: shell", [
       {
@@ -87,33 +107,33 @@ async function main() {
 
     await driver.executeScript("mobile: shell", [
       {
-        command: 'input text "2"',
+        command: 'input text "100"',
       },
     ]);
     await driver.pause(2000);
 
-    // await driver.executeScript("mobile: shell", [
-    //   {
-    //     command: "input tap 388 925",
-    //   },
-    // ]);
-    // await driver.pause(2000);
+    await driver.executeScript("mobile: shell", [
+      {
+        command: "input tap 388 925",
+      },
+    ]);
+    await driver.pause(2000);
 
-    // await driver.executeScript("mobile: shell", [
-    //   {
-    //     command: 'input text "text transfer"',
-    //   },
-    // ]);
-    // await driver.pause(2000);
+    await driver.executeScript("mobile: shell", [
+      {
+        command: 'input text "<script>alert("xss")</script>"',
+      },
+    ]);
+    await driver.pause(2000);
 
-    // Click transfer button
-    // await driver
-    //   .action("pointer")
-    //   .move({ duration: 0, x: 515, y: 2224 })
-    //   .down({ button: 0 })
-    //   .pause(50)
-    //   .up({ button: 0 })
-    //   .perform();
+    //Click transfer button
+    await driver
+      .action("pointer")
+      .move({ duration: 0, x: 515, y: 2224 })
+      .down({ button: 0 })
+      .pause(50)
+      .up({ button: 0 })
+      .perform();
 
     //If not send message
     await driver
@@ -134,7 +154,7 @@ async function main() {
       .up({ button: 0 })
       .perform();
 
-    await driver.pause(4000);
+    await driver.pause(6000);
 
     for (let i = 0; i < 6; i++) {
       await driver
@@ -144,8 +164,24 @@ async function main() {
         .pause(50)
         .up({ button: 0 })
         .perform();
+      await driver.pause(200);
     }
-    await driver.pause(500);
+    await driver.pause(10000);
+
+    await eyes.check(Target.window().fully());
+
+    await driver.pause(3000);
+
+    await eyes.close();
+
+    //Close session detail transfer
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 294, y: 2184 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
   }
 }
 
