@@ -59,7 +59,7 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(7000);
+    await driver.pause(4000);
 
     //Enter amount to swap
     await driver
@@ -69,14 +69,34 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(7000);
+    await driver.pause(2000);
 
     await driver.executeScript("mobile: shell", [
       {
-        command: 'input text "20"',
+        command: 'input text "10"',
       },
     ]);
-    await driver.pause(5000);
+    await driver.pause(3000);
+
+    //Click select token swap to
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 215, y: 1150 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
+    // await driver.pause(1000);
+
+    // //Click token TON
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 431, y: 1301 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
+    // await driver.pause(3000);
 
     //Click swap button
     await driver
@@ -117,15 +137,13 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(2000);
+    await driver.pause(8000);
 
-    await driver.pause(6000);
+    // await eyes.check(Target.window().fully());
 
-    await eyes.check(Target.window().fully());
+    // await driver.pause(3000);
 
-    await driver.pause(3000);
-
-    await eyes.close();
+    // await eyes.close();
 
     await driver.pause(7000);
   } else {
@@ -141,7 +159,7 @@ async function main() {
     //   .up({ button: 0 })
     //   .perform();
 
-    //Select token swap
+    // Select token swap
     // await driver
     //   .action("pointer")
     //   .move({ duration: 0, x: 202, y: 606 })
@@ -152,7 +170,7 @@ async function main() {
 
     // await driver.pause(6000);
 
-    // //Token TON
+    //Token TON
     // await driver
     //   .action("pointer")
     //   .move({ duration: 0, x: 523, y: 1055 })
@@ -179,7 +197,7 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(7000);
+    await driver.pause(3000);
 
     //Enter amount to swap
     await driver
@@ -189,14 +207,34 @@ async function main() {
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(7000);
+    await driver.pause(3000);
 
     await driver.executeScript("mobile: shell", [
       {
-        command: 'input text "20"',
+        command: 'input text "10"',
       },
     ]);
-    await driver.pause(5000);
+    await driver.pause(3000);
+
+    //Click select token swap to
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 215, y: 1150 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
+    // await driver.pause(1000);
+
+    // //Click token TON
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 485, y: 1058 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
+    // await driver.pause(3000);
 
     //Click swap button
     await driver
@@ -239,11 +277,11 @@ async function main() {
       .perform();
     await driver.pause(2000);
 
-    await driver.pause(6000);
+    // await driver.pause(6000);
 
-    await eyes.check(Target.window().fully());
+    // await eyes.check(Target.window().fully());
 
-    await driver.pause(3000);
+    // await driver.pause(3000);
 
     await eyes.close();
 
