@@ -6,7 +6,7 @@ let driver;
 let eyes;
 
 async function main() {
-  eyes = new Eyes();
+  // eyes = new Eyes();
 
   console.log("Connecting to Appium server...");
 
@@ -18,8 +18,9 @@ async function main() {
       platformName: "Android",
 
       "appium:deviceName": "emulator-5554",
-      "appium:appPackage": "com.android.chrome",
-      "appium:appActivity": "com.google.android.apps.chrome.Main",
+      "appium:appPackage": "com.brave.browser",
+      // "appium:appPackage": "com.android.chrome",
+      // "appium:appActivity": "com.google.android.apps.chrome.Main",
       "appium:automationName": "UiAutomator2",
       "appium:noReset": true,
       "appium:autoGrantPermissions": true,
@@ -27,49 +28,39 @@ async function main() {
     },
   });
 
-  console.log("Chrome has opened!");
+  console.log("Brave has opened!");
 
   await driver.pause(7000);
 
-  eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
-  await eyes.open(driver, "Ting-Web", "Check Swap Functional");
+  // eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
+  // await eyes.open(driver, "Ting-Web", "Check Swap Functional");
 
-  const currentActivity = await driver.getCurrentActivity();
-  if (currentActivity !== "com.google.android.apps.chrome.Main") {
-    await driver.startActivity(
-      "com.android.chrome",
-      "com.google.android.apps.chrome.Main"
-    );
-    console.log("Chrome was not open, started activity.");
-    await driver.pause(10000);
+  const currentPackage = await driver.getCurrentPackage();
+  console.log(currentPackage);
+  if (currentPackage !== "com.brave.browser") {
+    await driver.startActivity("com.brave.browser");
+    console.log("Brave was not open, started activity.");
 
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 890, y: 569 })
+      .move({ duration: 0, x: 832, y: 612 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(7000);
 
-    await driver
-      .action("pointer")
-      .move({ duration: 0, x: 890, y: 569 })
-      .down({ button: 0 })
-      .pause(50)
-      .up({ button: 0 })
-      .perform();
-    await driver.pause(4000);
+    await driver.pause(3000);
 
     //Enter amount to swap
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 693, y: 606 })
+      .move({ duration: 0, x: 832, y: 612 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
-    await driver.pause(2000);
+
+    await driver.pause(3000);
 
     await driver.executeScript("mobile: shell", [
       {
@@ -77,6 +68,21 @@ async function main() {
       },
     ]);
     await driver.pause(3000);
+
+    await driver.performActions([
+      {
+        type: "pointer",
+        id: "finger1",
+        parameters: { pointerType: "touch" },
+        actions: [
+          { type: "pointerMove", duration: 0, x: 552, y: 1328 },
+          { type: "pointerDown" },
+          { type: "pause", duration: 100 },
+          { type: "pointerUp" },
+        ],
+      },
+    ]);
+    await driver.pause(2000);
 
     //Click select token swap to
     // await driver
@@ -91,7 +97,7 @@ async function main() {
     // //Click token TON
     // await driver
     //   .action("pointer")
-    //   .move({ duration: 0, x: 431, y: 1301 })
+    //   .move({ duration: 0, x: 485, y: 1058 })
     //   .down({ button: 0 })
     //   .pause(50)
     //   .up({ button: 0 })
@@ -99,45 +105,38 @@ async function main() {
     // await driver.pause(3000);
 
     //Click swap button
+
+    //Click confirm button
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 523, y: 1450 })
+      .move({ duration: 0, x: 530, y: 2086 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
     await driver.pause(3000);
 
-    //Click confirm button
-    await driver
-      .action("pointer")
-      .move({ duration: 0, x: 523, y: 2202 })
-      .down({ button: 0 })
-      .pause(50)
-      .up({ button: 0 })
-      .perform();
-    await driver.pause(2000);
-
     for (let i = 0; i < 6; i++) {
       await driver
         .action("pointer")
-        .move({ duration: 0, x: 545, y: 2194 })
+        .move({ duration: 0, x: 537, y: 2052 })
         .down({ button: 0 })
         .pause(50)
         .up({ button: 0 })
         .perform();
-      await driver.pause(200);
+
+      await driver.pause(500);
     }
 
     //Click token USDT
-    await driver
-      .action("pointer")
-      .move({ duration: 0, x: 472, y: 1784 })
-      .down({ button: 0 })
-      .pause(50)
-      .up({ button: 0 })
-      .perform();
-    await driver.pause(8000);
+    // await driver
+    //   .action("pointer")
+    //   .move({ duration: 0, x: 472, y: 1784 })
+    //   .down({ button: 0 })
+    //   .pause(50)
+    //   .up({ button: 0 })
+    //   .perform();
+    // await driver.pause(8000);
 
     // await eyes.check(Target.window().fully());
 
@@ -192,29 +191,46 @@ async function main() {
 
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 890, y: 569 })
+      .move({ duration: 0, x: 832, y: 612 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
+
     await driver.pause(3000);
 
     //Enter amount to swap
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 693, y: 606 })
+      .move({ duration: 0, x: 832, y: 612 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
+
     await driver.pause(3000);
 
     await driver.executeScript("mobile: shell", [
       {
-        command: 'input text "10"',
+        command: 'input text "20"',
       },
     ]);
     await driver.pause(3000);
+
+    await driver.performActions([
+      {
+        type: "pointer",
+        id: "finger1",
+        parameters: { pointerType: "touch" },
+        actions: [
+          { type: "pointerMove", duration: 0, x: 552, y: 1328 },
+          { type: "pointerDown" },
+          { type: "pause", duration: 100 },
+          { type: "pointerUp" },
+        ],
+      },
+    ]);
+    await driver.pause(2000);
 
     //Click select token swap to
     // await driver
@@ -237,51 +253,34 @@ async function main() {
     // await driver.pause(3000);
 
     //Click swap button
+
+    //Click confirm button
     await driver
       .action("pointer")
-      .move({ duration: 0, x: 523, y: 1450 })
+      .move({ duration: 0, x: 530, y: 2086 })
       .down({ button: 0 })
       .pause(50)
       .up({ button: 0 })
       .perform();
     await driver.pause(3000);
 
-    //Click confirm button
-    await driver
-      .action("pointer")
-      .move({ duration: 0, x: 523, y: 2202 })
-      .down({ button: 0 })
-      .pause(50)
-      .up({ button: 0 })
-      .perform();
-    await driver.pause(2000);
-
     for (let i = 0; i < 6; i++) {
       await driver
         .action("pointer")
-        .move({ duration: 0, x: 545, y: 2194 })
+        .move({ duration: 0, x: 537, y: 2052 })
         .down({ button: 0 })
         .pause(50)
         .up({ button: 0 })
         .perform();
-      await driver.pause(200);
+
+      await driver.pause(500);
     }
 
-    //Click token USDT
-    await driver
-      .action("pointer")
-      .move({ duration: 0, x: 472, y: 1784 })
-      .down({ button: 0 })
-      .pause(50)
-      .up({ button: 0 })
-      .perform();
-    await driver.pause(2000);
+    await driver.pause(6000);
 
-    // await driver.pause(6000);
+    await eyes.check(Target.window().fully());
 
-    // await eyes.check(Target.window().fully());
-
-    // await driver.pause(3000);
+    await driver.pause(3000);
 
     await eyes.close();
 
