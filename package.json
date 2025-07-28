@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "@applitools/eyes-selenium": "^4.79.0",
-    "@applitools/eyes-webdriverio": "^5.55.0"
+    "@applitools/eyes-webdriverio": "^5.58.4"
   }
 }
